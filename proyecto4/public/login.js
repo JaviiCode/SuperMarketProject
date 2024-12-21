@@ -16,10 +16,10 @@ async function login() {
         const response = await fetch("/login", {
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": token, // Incluir el token CSRF
-                "Content-Type": "application/x-www-form-urlencoded", // Tipo de contenido
+                "X-CSRF-TOKEN": token,
+                "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: params.toString() // Enviar los parámetros
+            body: params.toString({usuario, password}) // Enviar los parámetros
         });
 
         // Convertir la respuesta a JSON
