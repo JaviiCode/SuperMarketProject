@@ -3,62 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Session;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function login(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $usuarioModel = new Usuario();
+        //Compruebo el usuario con la funcion del modelo
+        $usuario = $usuarioModel->comprobarUsuario($request->email, $request->password);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        //En caso de que sea invalido devuelve un json de un error y en caso contrario inicia la sesion y devuelve un true
+        if (!$usuario) {
+            return response()->json([
+                'respuesta' => false,
+                'error' => 'Credenciales incorrectas'
+            ]);
+        }else{
+            session_start();
+            Session::put('Usuario', $usuario->email);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return response()->json([
+                'respuesta' => true,
+                'error' => ''
+            ]);
+        }
     }
 }
