@@ -12,35 +12,36 @@ async function login() {
         params.append("email", email);
         params.append("password", password);
 
-        // Enviar la petición fetch
+
         const response = await fetch("/login", {
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": token,
                 "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: params.toString({usuario, password}) // Enviar los parámetros
+            body: params.toString({})
         });
 
-        // Convertir la respuesta a JSON
-        const responseJson = await response.json();
+
+        const responseJson = response.json();
 
         // Manejar la respuesta
         if (response.ok) {
             if (responseJson.respuesta === false) {
-                alert("Revise usuario y contraseña"); // Mostrar alerta si falla
-                window.location.href = "/"; // Redirigir al login
-                email = ""; // Limpiar el email
+                alert("Revise usuario y contraseña");
+                window.location.href = "/";
+                email = "";
             } else {
-                // Redirigir a la página principal si el login es exitoso
+
                 window.location.href = "/principal";
+                
             }
         } else {
-            console.error("Error en la respuesta: ", response.status); // Error HTTP
+            console.error("Error en la respuesta: ", response.status);
         }
     } catch (error) {
-        console.error("Error en la petición:", error); // Error en fetch
+        console.error("Error en la petición:", error);
     }
 
-    return false; // Evitar cualquier comportamiento por defecto
+    return false;
 }

@@ -19,7 +19,7 @@ class UsuarioController extends Controller
         $usuarioModel = new Usuario();
         //Compruebo el usuario con la funcion del modelo
         $usuario = $usuarioModel->comprobarUsuario($request->email, $request->password);
-
+        var_dump($usuario);
         //En caso de que sea invalido devuelve un json de un error y en caso contrario inicia la sesion y devuelve un true
         if (!$usuario) {
             return response()->json([
@@ -30,10 +30,17 @@ class UsuarioController extends Controller
             session_start();
             Session::put('Usuario', $usuario->email);
 
+
             return response()->json([
                 'respuesta' => true,
                 'error' => ''
             ]);
+
         }
+    }
+
+    public function obtenerUsuario(){
+        $usuario = Session::get ("Usuario");
+        return json_encode(["usuario" => $usuario]);
     }
 }
