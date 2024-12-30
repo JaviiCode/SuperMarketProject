@@ -9,8 +9,8 @@ Route::get('/login', function () {
     return view('login');
 })->name("login");
 
-Route::get('/principal', function () {
-    return view('principal');
+Route::get('/', function () {
+    if(UsuarioController::usuarioExiste()){return view('principal');}else{return redirect()->route('login');}
 })->name("principal");
 
 
@@ -20,5 +20,6 @@ Route::resource('usuarios', UsuarioController::class);
 Route::resource('categoria', ProductoController::class);
 Route::resource('producto', CategoriaController::class);
 Route::post('login', [UsuarioController::class, "login"]);
+Route::get('LogOut', [UsuarioController::class, 'logout']);
 Route::get('getUsario', [UsuarioController::class, "obtenerUsuario"]);
 

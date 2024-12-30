@@ -1,6 +1,7 @@
 
 
 <header>
+    <script type="text/javascript" src="{{ asset('header.js') }}"></script>
     <h1>Libreria</h1>
     <span id="cab_usuario"></span><br><br>
     Menú:
@@ -26,5 +27,8 @@
 
     document.getElementById("cab_usuario").innerHTML = "Usuario: "+responseText.usuario;
 }
+
+
+
 obtenerUsuario();
 </script>

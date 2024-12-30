@@ -23,18 +23,15 @@ async function login() {
         });
 
 
-        const responseJson = response.json();
+        const responseJson = await response.json();
 
         // Manejar la respuesta
         if (response.ok) {
             if (responseJson.respuesta === false) {
                 alert("Revise usuario y contraseña");
-                window.location.href = "/";
                 email = "";
             } else {
-
-                window.location.href = "/principal";
-                
+                window.location.href = "/";
             }
         } else {
             console.error("Error en la respuesta: ", response.status);
