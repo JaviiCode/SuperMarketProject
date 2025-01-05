@@ -17,9 +17,10 @@ Route::get('/', function () {
 
 
 Route::resource('usuarios', UsuarioController::class);
-Route::resource('categoria', ProductoController::class);
+Route::resource('categorias', CategoriaController::class);
 Route::resource('producto', CategoriaController::class);
 Route::post('login', [UsuarioController::class, "login"]);
 Route::get('LogOut', [UsuarioController::class, 'logout']);
 Route::get('getUsario', [UsuarioController::class, "obtenerUsuario"]);
+
 

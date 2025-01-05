@@ -2,63 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $listaCategoria = Categoria::paginate(15);
+        $error = '';
+
+        if($listaCategoria == null) {
+            $error = "No hay categorias disponibles";
+        }
+
+        return view('categorias.index', compact('listaCategoria'), ['error' => $error]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('categorias.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Validación de formularios
+        $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+
+        ]);
+
+        $categoria = new Categoria();
+        $categoria->nombre = $request->nombre;
+        $categoria->descripcion = $request->descripcion;
+
+        $res = $categoria->save();
+
+        return redirect()->route('categorias.index', compact('res'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Categoria $categoria)
     {
-        //
+        return view('categorias.show', compact('categorias'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Categoria $categoria)
     {
-        //
+        return view('categorias.edit', compact('categorias'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Categoria $categoria)
     {
-        //
+        $categoria = Categoria::find($categoria->id);
+        $categoria->nombre = $request->nombre;
+        $categoria->descripcion = $request->descripcion;
+        $categoria->save();
+
+        return redirect()->route('categorias.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Categoria $categoria)
     {
-        //
+        $categoria = Categoria::find($categoria->id);
+        $categoria->delete();
+        return redirect()->route('categorias.index');
     }
 }
