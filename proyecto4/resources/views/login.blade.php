@@ -12,8 +12,8 @@
 
     <section id="login">
         <form action="" method="POST" class="form form-light">
-            <h5 class="font-weight-normal">Usuario</h5> <input class="form-control w-25" id="usuario" type="text"><br>
-            <h5 class="font-weight-normal">Clave</h5> <input class="form-control w-25" id="clave" type="password"><br>
+            <h5 class="font-weight-normal">Usuario</h5> <input placeholder="yeray@empresa.com" class="form-control w-25" id="usuario" type="text"><br>
+            <h5 class="font-weight-normal">Clave</h5> <input placeholder="1234" class="form-control w-25" id="clave" type="password"><br>
             <input type="button" class="btn btn-primary" value="Iniciar sesión" onclick="login();">
         </form>
     </section>

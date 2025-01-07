@@ -1,4 +1,4 @@
-@include('layouts.cabecera')
+@include('cabecera')
 
 <body>
     <?php

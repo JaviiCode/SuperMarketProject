@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->string('descripcion',100);
             $table->integer('stock');
-            $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->unsignedBigInteger('categoria_id')->nullable();
+            $table->foreign('categoria_id')->references('id')->on('categoria')->nullOnDelete();
             $table->timestamps();
         });
     }

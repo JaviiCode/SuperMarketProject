@@ -40,8 +40,11 @@ class UsuarioController extends Controller
 
     public function obtenerUsuario()
     {
-        $usuario = Session::get("Usuario");
-        return json_encode(["usuario" => $usuario]);
+        if(self::usuarioExiste()){
+            return response(json_encode(['respuesta'=> Session::get("Usuario")]));
+        }else{
+            return response(json_encode(['respuesta'=>""]));
+        }
     }
 
     public static function usuarioExiste()
@@ -59,6 +62,6 @@ class UsuarioController extends Controller
         setcookie("laravel_session", " ", time() - 1000);
         setcookie(session_name(), " ", time()-1000);
         //return json_encode(csrf_token());
-
+        return redirect()->route ("login");
     }
 }

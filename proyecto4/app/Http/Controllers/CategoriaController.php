@@ -9,7 +9,7 @@ class CategoriaController extends Controller
 {
     public function index()
     {
-        $listaCategoria = Categoria::paginate(15);
+        $listaCategoria = Categoria::all();
         $error = '';
 
         if($listaCategoria == null) {
@@ -49,11 +49,12 @@ class CategoriaController extends Controller
 
     public function edit(Categoria $categoria)
     {
-        return view('categorias.edit', compact('categorias'));
+        return view('categorias.edit', compact('categoria'));
     }
 
     public function update(Request $request, Categoria $categoria)
     {
+        $request->validate(["nombre" => "required", "descripcion" => "required"]);
         $categoria = Categoria::find($categoria->id);
         $categoria->nombre = $request->nombre;
         $categoria->descripcion = $request->descripcion;
@@ -67,5 +68,10 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($categoria->id);
         $categoria->delete();
         return redirect()->route('categorias.index');
+    }
+    public function productos(int $categoria_id){
+        $categoria = Categoria::find($categoria_id);
+        $listaProducto = $categoria->getProductos;
+        return view('categorias.productoCategoria', compact('listaProducto'));
     }
 }

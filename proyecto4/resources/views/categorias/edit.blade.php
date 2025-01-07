@@ -1,4 +1,4 @@
-@include('layouts.cabecera')
+@include('cabecera')
 
 <body>
     <h1>Editar Categoria: <?php echo $categoria->nombre; ?></h1>
@@ -17,11 +17,18 @@
                 <label for="nombre">Nombre:</label>
                 <input type="text" class="form-control" id="nombre" name="nombre"
                     value="<?php echo $categoria->nombre; ?>">
+
+                @error('nombre')
+                    <small class="text-danger">{{ $message }} </small>
+                @enderror
             </div>
             <div class="form-group col-md-6">
                 <label for="descripcion">Descripción:</label>
                 <input type="text" class="form-control" id="descripcion" name="descripcion"
                     value="<?php echo $categoria->descripcion; ?>">
+                @error('descripcion')
+                    <small class="text-danger">{{ $message }} </small>
+                @enderror
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Actualizar</button>
